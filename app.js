@@ -1,3 +1,5 @@
+// M e n u A r r a y
+
 const menu = [
   {
     id: 1,
@@ -6,7 +8,7 @@ const menu = [
     price: 10.99,
     img:
       "https://twoplaidaprons.com/wp-content/uploads/2020/09/tteokbokki-top-down-view-of-tteokbokki-in-a-bowl-500x500.jpg",
-    desc: `Spicy rice cakes, serving with fish cake.`,
+    desc: `Spicy rice cakes, serving with fish cake.`
   },
   {
     id: 2,
@@ -15,7 +17,7 @@ const menu = [
     price: 7.99,
     img:
       "https://www.forkknifeswoon.com/wp-content/uploads/2014/10/simple-homemade-chicken-ramen-fork-knife-swoon-01.jpg",
-    desc: `Chicken noodle soup, serving with vegetables such as soy bean, green onion. In an optional you can ask for egg. `,
+    desc: `Chicken noodle soup, serving with vegetables such as soy bean, green onion. In an optional you can ask for egg. `
   },
   {
     id: 3,
@@ -24,7 +26,7 @@ const menu = [
     price: 8.99,
     img:
       "https://dwellbymichelle.com/wp-content/uploads/2020/05/DWELL-bibimbap.jpg",
-    desc: `Boiling vegetables, serving with special hot sauce`,
+    desc: `Boiling vegetables, serving with special hot sauce`
   },
   {
     id: 4,
@@ -33,7 +35,7 @@ const menu = [
     price: 5.99,
     img:
       "https://www.savingdessert.com/wp-content/uploads/2019/02/Dan-Dan-Noodles-10.jpg",
-    desc: `Dan dan noodle, serving with green onion `,
+    desc: `Dan dan noodle, serving with green onion `
   },
   {
     id: 5,
@@ -42,7 +44,7 @@ const menu = [
     price: 12.99,
     img:
       "https://salu-salo.com/wp-content/uploads/2013/02/Yangzhou-Fried-Rice1.jpg",
-    desc: `Yangzhou style fried rice, serving with bean and pickles `,
+    desc: `Yangzhou style fried rice, serving with bean and pickles `
   },
   {
     id: 6,
@@ -51,7 +53,7 @@ const menu = [
     price: 9.99,
     img:
       "https://www.manusmenu.com/wp-content/uploads/2017/08/Onigiri-3-1-of-1.jpg",
-    desc: `Rice Sandwich, serving with soy sauce`,
+    desc: `Rice Sandwich, serving with soy sauce`
   },
   {
     id: 7,
@@ -60,7 +62,7 @@ const menu = [
     price: 15.99,
     img:
       "https://www.curiouscuisiniere.com/wp-content/uploads/2020/04/Jajangmyeon-Korean-Noodles-in-Black-Bean-Sauce5.1200H-720x540.jpg",
-    desc: `Black bean sauce noodle, serving with green onion `,
+    desc: `Black bean sauce noodle, serving with green onion `
   },
   {
     id: 8,
@@ -69,7 +71,7 @@ const menu = [
     price: 12.99,
     img:
       "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/F688C2F6-86EC-46C4-B9C7-A6BA01DF7437/Derivates/32E3E72A-F786-406D-AF7F-B30980A9AC6C.jpg",
-    desc: `Hot pepper sauce noodle, serving with soy bean and onion`,
+    desc: `Hot pepper sauce noodle, serving with soy bean and onion`
   },
   {
     id: 9,
@@ -78,99 +80,63 @@ const menu = [
     price: 3.99,
     img:
       "https://www.justonecookbook.com/wp-content/uploads/2011/10/Dorayaki-New-500x400.jpg",
-    desc: `Red bean paste dessert, serving with honey.`,
-  },
+    desc: `Red bean paste dessert, serving with honey.`
+  }
 ];
 
-// Button and Menu Selection
+// C o n t a i n e r S e l e c t i o n
 
 const btnContainerDOM = document.querySelector(".btn-container")
 const sectionDOM = document.querySelector(".section-center")
+const btnList = ["All", "Korea", "Japan", "China"]
 
-// Button Creation
 
-const createButtons = () => {
-  let allButtons = `
-  <button id="all" type="button" class="btn btn-outline-secondary">All</button>
-  <button id="korea" type="button" class="btn btn-outline-secondary btn-item">Korea</button>
-  <button id="japan" type="button" class="btn btn-outline-secondary btn-item">Japan</button>
-  <button id="china" type="button" class="btn btn-outline-secondary btn-item">China</button>
-  `
-  btnContainerDOM.innerHTML = allButtons;
-}
-createButtons();
+// B u t t o n  c r e a t i o n
 
-// Menu Creation
-const createMenu = (menuItems) => {
-  let menuList = `
-  <div class="menu-items col-lg-6 col-sm-12">
-            <img class="photo" src="${menuItems.img}" alt="${menuItems.title}">
-            <div class="menu-info">
-              <div class="menu-title">
+btnList.forEach( (value) => {
+  let buttons = document.createElement("button")
+  buttons.innerHTML = value
+  buttons.classList.add("btn", "btn-outline-secondary", "btn-item")
+  buttons.setAttribute("id", value)
+  buttons.addEventListener("click", selectionID)
+  btnContainerDOM.append(buttons)
+})
+
+// S e l e c t i o n    i d    &    i n n e r H T M L 
+
+function selectionID () {
+  const result = this.id === "All" ? menu 
+  : menu.filter( (item) => {
+    return item.category === this.id
+  })
+  createMenu(result)
+}  
+
+
+// M e n u  C r e a t i o n
+
+function createMenu (menuItems) {
+  sectionDOM.innerHTML = ""
+  menuItems.forEach( (menuItems) => {
+    let menuList = `
+    <div class="menu-items col-lg-6 col-sm-12">
+        <img class="photo" src="${menuItems.img}" alt="${menuItems.title}">
+        <div class="menu-info">
+            <div class="menu-title">
                 <h4>${menuItems.title}</h4>
-                <h4 class="">${menuItems.price}</h4>
-              </div>
-              <div class="menu-text">
+                <h4>${menuItems.price}</h4>
+            </div>
+            <div class="menu-text">
                 ${menuItems.desc}
               </div>
-            </div>
-          </div>
-  `
-  return menuList;
-}
-
-// Filtre (All Foods)
-
-const listAllFoods = () => {
-  let allFoods = "";
-
-  menu.map(item => {
-    allFoods += createMenu(item)
+        </div>
+    </div>
+    `
+    sectionDOM.innerHTML += menuList
   })
-  sectionDOM.innerHTML = allFoods;
 }
 
-// Show All Foods on Homepage
-document.addEventListener("DOMContentLoaded", listAllFoods);
 
-// List Korea Foods
-const listKoreaFoods = () => {
-  let koreaFoods = "";
+// P a g e  S t a r t  S h o w  A l l  C a t e g o r i e s
+createMenu(menu)
 
-  menu.map(item => {
-    if (item.category === "Korea") {
-      koreaFoods += createMenu(item)
-    }
-  })
-  sectionDOM.innerHTML = koreaFoods;
-}
-document.querySelector("#korea").addEventListener("click", listKoreaFoods);
-
-// List Japan Foods
-const listJapanFoods = () => {
-  let japanFoods = "";
-
-  menu.map(item => {
-    if (item.category === "Japan") {
-      japanFoods += createMenu(item)
-    }
-  })
-  sectionDOM.innerHTML = japanFoods;
-}
-document.querySelector("#japan").addEventListener("click", listJapanFoods);
-
-// List Chine Foods
-const listChinaFoods = () => {
-  let chinaFoods = "";
-
-  menu.map(item => {
-    if (item.category === "China") {
-      chinaFoods += createMenu(item)
-    }
-  })
-  sectionDOM.innerHTML = chinaFoods;
-}
-document.querySelector("#china").addEventListener("click", listChinaFoods);
-
-// List All Foods 
-document.querySelector("#all").addEventListener("click", listAllFoods);
